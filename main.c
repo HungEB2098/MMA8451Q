@@ -8,6 +8,10 @@
 #include "slcd.h"
 
 volatile uint8_t state;
+//Rơi tự do: 0.35g
+//For a freefall algorithm a minimum of 120 ms should be considered for 
+//the freefall condition to be met to be considered a linear
+//freefall and not a false trigger.
 
 int main(void) {
 	UART_Init();
@@ -23,16 +27,19 @@ int main(void) {
 	
     while (1) {
 		if (state ==0) {
-			LED_Active_Reset();
+			LED_Green();
 			Systick_Shutdown();
 			
 		} else {
 			Systick_Init();
 			Value data = MMA8451_Read();
 			float realData = AccelValue(data);
-			if (realData > 2.5) {
+			//This condition would need to occur for a minimum of 100 ms 
+			//to ensure that the event wasn't just noise
+			if (realData > 2) {
+				//For Motion detection the condition is > Threshold
 				while (1) {
-					LED_Fall_Detected();
+					LED_Red();
 					SLCD_WriteChar('1');
 				}
 			}

@@ -6,7 +6,6 @@
 #define OUT_Y_LSB 0x04
 #define OUT_Z_MSB 0x05
 #define OUT_Z_LSB 0x06
-#define WHO_AM_I  0x0D
 
 typedef struct {
     float x;

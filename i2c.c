@@ -55,6 +55,11 @@ void I2C_Init(void) {
 
 		 //Send NACK
      I2C0->C1 |= (1<<3); //Transmit Acknowledge Enable 
+    // In master receive mode, the FACK bit must be set to zero
+    // before the last byte transfer
+    //-->
+    // No acknowledge signal is sent to the bus on the 
+    // following receiving data byte (if FACK is cleared)
 	
      //Fake read
      result = I2C0->D;
