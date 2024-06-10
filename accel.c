@@ -34,7 +34,6 @@ Value MMA8451_Read(void) {
     //Output buffer data format full scale. Default value: 00 (2g)
     //Sensitivity: 4096 counts/g
     //2^14 = 16384 -> 2g: -8192 to 8191
-
 	data.x = (float)X / 8192 * 2;
     data.y = (float)Y / 8192 * 2;
 	data.z = (float)Z / 8192 * 2;
@@ -45,5 +44,3 @@ Value MMA8451_Read(void) {
 float AccelValue(Value data) {
 	return sqrt(data.x * data.x + data.y * data.y + data.z * data.z);
 }
-//Value = value
-// 

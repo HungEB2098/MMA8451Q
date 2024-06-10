@@ -1,4 +1,3 @@
-
 #include "MKL46Z4.h"
 #include "slcd.h"
 
@@ -16,12 +15,11 @@ const unsigned char WF_Table[ ] =
     LCD_COM1,   
     LCD_COM2,   
     LCD_COM3,   
-
 };
 
 void SLCD_Init(void)
 {
-	SIM->SCGC5 |= SIM_SCGC5_SLCD_MASK | SIM_SCGC5_PORTB_MASK | SIM_SCGC5_PORTC_MASK | SIM_SCGC5_PORTD_MASK | SIM_SCGC5_PORTE_MASK;
+	SIM->SCGC5 |= (1<<10) | (1<<11) | (1<<12) | (1<<13) | (1<<19); //BCDE and LCD clock enable
 
     // configure pins for LCD operation
     PORTC->PCR[20] = 0x00000000;     //VLL2
@@ -65,38 +63,36 @@ void SLCD_Init(void)
 void SLCD_EnablePins(void)
 {
     //bật Pen
-LCD->PEN[1] |= (1 << 5);        // CHAR1a
-LCD->PEN[0] |= (1 << 17);       // CHAR1b
-LCD->PEN[0] |= (1 << 7);        // CHAR2a
-LCD->PEN[0] |= (1 << 8);        // CHAR2b
-LCD->PEN[1] |= (1 << 21);       // CHAR3a
-LCD->PEN[1] |= (1 << 6);        // CHAR3b
-LCD->PEN[0] |= (1 << 10);       // CHAR4a
-LCD->PEN[0] |= (1<< 11);       // CHAR4b
+	LCD->PEN[1] |= (1 << 5);        
+	LCD->PEN[0] |= (1 << 17);       
+	LCD->PEN[0] |= (1 << 7);        
+	LCD->PEN[0] |= (1 << 8);        
+	LCD->PEN[1] |= (1 << 21);       
+	LCD->PEN[1] |= (1 << 6);       
+	LCD->PEN[0] |= (1 << 10);       
+	LCD->PEN[0] |= (1<< 11);       
 
-LCD->PEN[1] |= (1<< 8);        // CHARCOM0
-LCD->BPEN[1] |= (1<< 8);       // CHARCOM0
-LCD->WF8B[40] = (1 << 0);
+	LCD->PEN[1] |= (1<< 8);        
+	LCD->BPEN[1] |= (1<< 8);       
+	LCD->WF8B[40] = (1 << 0);
 
-LCD->PEN[1] |= (1 << 20);       // CHARCOM1
-LCD->BPEN[1] |= (1 << 20);      // CHARCOM1
-LCD->WF8B[52] = (1 << 1);
+	LCD->PEN[1] |= (1 << 20);       
+	LCD->BPEN[1] |= (1 << 20);      
+	LCD->WF8B[52] = (1 << 1);
 
-LCD->PEN[0] |= (1 << 19);       // CHARCOM2
-LCD->BPEN[0] |= (1 << 19);      // CHARCOM2
-LCD->WF8B[19] = (1 << 2);
+	LCD->PEN[0] |= (1 << 19);       
+	LCD->BPEN[0] |= (1 << 19);      
+	LCD->WF8B[19] = (1 << 2);
 
-LCD->PEN[0] |= (1 << 18);       // CHARCOM3
-LCD->BPEN[0] |= (1 << 18);      // CHARCOM3
-LCD->WF8B[18] = (1 << 3);
-
+	LCD->PEN[0] |= (1 << 18);       
+	LCD->BPEN[0] |= (1 << 18);      
+	LCD->WF8B[18] = (1 << 3);
 }
-//bât BP(COM0) -> bật bit 0 của BPEN
 
 unsigned char char_pos;
 
 void SLCD_WriteChar(unsigned char lbValue) {
-    unsigned char *lbpLCDWF = (unsigned char *)&LCD->WF[0];
+    unsigned char *p = (unsigned char *)&LCD->WF[0];
     unsigned char position = char_pos * 2;
 
     // Adjust ASCII value
@@ -113,8 +109,8 @@ void SLCD_WriteChar(unsigned char lbValue) {
     const unsigned char *segments = (lbValue == 0) ? LCD_Char_0 : LCD_Char_1;
 
     for (int lbCounter = 0; lbCounter < 2; lbCounter++) {
-        unsigned char temp = (lbCounter == 1) ? (lbpLCDWF[WF_Table[position]] & 0x01) : 0;
-        lbpLCDWF[WF_Table[position]] = segments[lbCounter] | temp;
+        unsigned char temp = (lbCounter == 1) ? (p[WF_Table[position]] & 0x01) : 0;
+        p[WF_Table[position]] = segments[lbCounter] | temp;
         position++;
     }
 }
