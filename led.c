@@ -18,11 +18,12 @@ void LED_Init(void) {
 	
 }
 
-void LED_Active_Reset(void) {
+void LED_Green(void) {
 	PTD->PSOR |= 1 << 5;
 }
 
-void LED_Fall_Detected(void) {
+void LED_Red(void) {
+	//LED đỏ nháy ở tần số 2Hz
 	PTE->PSOR |= 1<<29;
 	delay(250);
 	PTE->PCOR |= 1<<29;
