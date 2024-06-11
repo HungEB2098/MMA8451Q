@@ -3,8 +3,8 @@
 
 void LED_Init(void) {
 	//Clock
-	SIM->SCGC5 |= (1<<12);
-	SIM->SCGC5 |= (1<<13);
+	SIM->SCGC5 |= (1<<12); //PORTD
+	SIM->SCGC5 |= (1<<13); //PORTE
 	
 	//GPIO alternative function
 	PORTD->PCR[5] |= (1<<8);

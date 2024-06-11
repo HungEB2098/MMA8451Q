@@ -14,7 +14,6 @@ volatile uint8_t state;
 //freefall and not a false trigger.
 
 int main(void) {
-	UART_Init();
 	Systick_Init();
   	I2C_Init();
   	MMA8451_Init();
