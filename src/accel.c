@@ -5,11 +5,11 @@
 #include <math.h>
 
 void MMA8451_Init(void) {
-    I2C_WriteRegister(0x1D, 0x2A, 0x18); //Put device in Standby mode
-    I2C_WriteRegister(0x1D, 0x15, 0xD8);
-    I2C_WriteRegister(0x1D, 0x17, 0x20); // //Set Threshold for Motion Detection to 32 counts
-    //2g/0.063g/count = 32counts
-    I2C_WriteRegister(0x1D, 0x18, 0x0A); //100 ms debounce timing
+    // I2C_WriteRegister(0x1D, 0x2A, 0x18); //Put device in Standby mode
+    // I2C_WriteRegister(0x1D, 0x15, 0xD8);
+    // I2C_WriteRegister(0x1D, 0x17, 0x20); // //Set Threshold for Motion Detection to 32 counts
+    // //2g/0.063g/count = 32counts
+    // I2C_WriteRegister(0x1D, 0x18, 0x0A); //100 ms debounce timing
     // Lấy mẫu
     // FF_MT_COUNT: 0x18
     // FF_MT_THS: 0x17
