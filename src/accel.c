@@ -4,33 +4,35 @@
 #include "delay.h"
 #include <math.h>
 
-void MMA8451_Init(void) {
-    // I2C_WriteRegister(0x1D, 0x2A, 0x18); //Put device in Standby mode
-    // I2C_WriteRegister(0x1D, 0x15, 0xD8);
-    // I2C_WriteRegister(0x1D, 0x17, 0x20); // //Set Threshold for Motion Detection to 32 counts
-    // //2g/0.063g/count = 32counts
-    // I2C_WriteRegister(0x1D, 0x18, 0x0A); //100 ms debounce timing
+void MMA8451Q_Init(void) {
+//    I2C_Write(0x1D, 0x2A, 0x18); //Put device in Standby mode
+//    I2C_Write(0x1D, 0x15, 0xD8);
+//		//Set Configuration Register for Motion Detection by setting the “OR” condition OAE = 1, enabling
+//		//X, Y, and the latch
+//    I2C_Write(0x1D, 0x17, 0x20); // //Set Threshold for Motion Detection to 32 counts
+//    //2g/0.063g/count = 32counts
+//    I2C_Write(0x1D, 0x18, 0x0A); //100 ms debounce timing
     // Lấy mẫu
     // FF_MT_COUNT: 0x18
     // FF_MT_THS: 0x17
     // CTRL_REG1: 0x2A
-    I2C_WriteRegister(0x1D, 0x2A, 0x01); //Put device in active mode, ODR = 800 Hz
+    I2C_Write(0x1D, 0x2A, 0x01); //Put device in active mode, ODR = 800 Hz
 }
 
 Value MMA8451_Read(void) {
     Value data;
 	
-    uint8_t X_MSB = I2C_ReadRegister(0x1D, OUT_X_MSB);
+    uint8_t X_MSB = I2C_Read(0x1D, OUT_X_MSB);
 	delay(1);
-    uint8_t X_LSB = I2C_ReadRegister(0x1D, OUT_X_LSB);
+    uint8_t X_LSB = I2C_Read(0x1D, OUT_X_LSB);
 	delay(1);
-    uint8_t Y_MSB = I2C_ReadRegister(0x1D, OUT_Y_MSB);
+    uint8_t Y_MSB = I2C_Read(0x1D, OUT_Y_MSB);
 	delay(1);
-    uint8_t Y_LSB = I2C_ReadRegister(0x1D, OUT_Y_LSB);
+    uint8_t Y_LSB = I2C_Read(0x1D, OUT_Y_LSB);
 	delay(1);
-    uint8_t Z_MSB = I2C_ReadRegister(0x1D, OUT_Z_MSB);
+    uint8_t Z_MSB = I2C_Read(0x1D, OUT_Z_MSB);
 	delay(1);
-    uint8_t Z_LSB = I2C_ReadRegister(0x1D, OUT_Z_LSB);
+    uint8_t Z_LSB = I2C_Read(0x1D, OUT_Z_LSB);
     delay(1);
 	
     int16_t X = ((int16_t)(X_MSB << 8 | X_LSB)) >> 2;

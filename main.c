@@ -1,4 +1,4 @@
-#include "MKL46Z4.h"
+ #include "MKL46Z4.h"
 #include "i2c.h"
 #include "accel.h"
 #include "uart.h"
@@ -15,15 +15,14 @@ volatile uint8_t state;
 
 int main(void) {
 	Systick_Init();
-  	I2C_Init();
-  	MMA8451_Init();
+  I2C_Init();
+  MMA8451Q_Init();
 	delay(1);
 	LED_Init();
 	Switch_Init();
 	SLCD_Init();
 	SLCD_EnablePins();
 	SLCD_WriteChar('0');
-	
     while (1) {
 		if (state ==0) {
 			LED_Green();

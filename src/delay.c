@@ -14,12 +14,14 @@ volatile uint32_t LED_tick;
 // } SysTick_Type;
 
 void Systick_Init(void) {
-	SysTick->CTRL |= (1 << 0);
-	SysTick->CTRL |= (1 << 1);
-	SysTick->CTRL |= (1 << 2);
-	SysTick->LOAD = SystemCoreClock/1000;
+	SysTick->CTRL |= (1 << 0); //Enable counter
+	SysTick->CTRL |= (1 << 1); //Enable interrupt
+	SysTick->CTRL |= (1 << 2); //Clock source is processor clock
+	SysTick->LOAD = SystemCoreClock/1000; //1ms
 	
-	NVIC_SetPriority(-1, 15);
+	NVIC_ClearPendingIRQ(SysTick_IRQn);
+	NVIC_EnableIRQ(SysTick_IRQn);
+	NVIC_SetPriority(SysTick_IRQn, 15);
 }
 
 void Systick_Shutdown(void) {

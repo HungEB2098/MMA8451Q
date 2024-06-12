@@ -17,7 +17,7 @@ void I2C_Init(void) {
     I2C0->C2 = 0x00;
 }
 
- void I2C_WriteRegister(uint8_t device_address, uint8_t register_address, uint8_t data) {
+ void I2C_Write(uint8_t device_address, uint8_t register_address, uint8_t data) {
      I2C_Start();
 		 address(device_address, register_address);
 	
@@ -37,7 +37,7 @@ void I2C_Init(void) {
      Wait();
  }
 
- uint8_t I2C_ReadRegister(uint8_t device_address, uint8_t register_address) {
+ uint8_t I2C_Read(uint8_t device_address, uint8_t register_address) {
      uint8_t result;
      I2C_Start();
 	
