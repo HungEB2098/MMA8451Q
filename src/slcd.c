@@ -91,28 +91,21 @@ void SLCD_EnablePins(void)
 	LCD->WF8B[18] = (1 << 3);
 }
 
-unsigned char char_pos;
-
 void SLCD_WriteChar(unsigned char value) {
-    unsigned char *p = (unsigned char *)&LCD->WF[0];
-    unsigned char position = char_pos * 2;
-
-    // Adjust ASCII value
+    // ASCII offset
     value -= '0';
 
     // Define segments for character '0' và '1'
-    const unsigned char LCD_Char_0[2] = {0x0B, 0x0E}; //  '0': SEGA, SEGB, SEGC, SEGD, SEGE, SEGF
-    const unsigned char LCD_Char_1[2] = {0x00, 0x06}; //  '1': SEGB, SEGC
+    char LCD_Char_0[2] = {0x0B, 0x0E}; //  '0': SEGA, SEGB, SEGC, SEGD, SEGE, SEGF
+    char LCD_Char_1[2] = {0x00, 0x06}; //  '1': SEGB, SEGC
 
     // ( SEGD+ SEGE+ SEGF+!SEGG) , ( SEGC+ SEGB+ SEGA) 
     // (!SEGD+!SEGE+!SEGF+!SEGG) , ( SEGC+ SEGB+!SEGA) 
     // Write segments for character '0' or '1' to the LCD positions
-    const unsigned char *segments = (value == 0) ? LCD_Char_0 : LCD_Char_1;
+    char *segments = (value == 0) ? LCD_Char_0 : LCD_Char_1;
 
     for (int i = 0; i < 2; i++) {
-        unsigned char temp = (i == 1) ? (p[Pin_Table[position]] & 0x01) : 0;
-        p[Pin_Table[position]] = segments[i] | temp;
-        position++;
+        LCD->WF8B[Pin_Table[i]] = segments[i];
     }
 }
 
