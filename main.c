@@ -16,7 +16,7 @@ volatile uint8_t state;
 int main(void) {
 	Systick_Init();
   I2C_Init();
-  MMA8451Q_Init();
+  MMA8451_Init();
 	delay(1);
 	LED_Init();
 	Switch_Init();
@@ -36,6 +36,7 @@ int main(void) {
 			//to ensure that the event wasn't just noise
 			if (realData > 2) {
 				//For Motion detection the condition is > Threshold
+				//For Freefall detection the condition is < Threshold
 				while (1) {
 					LED_Red();
 					SLCD_WriteChar('1');

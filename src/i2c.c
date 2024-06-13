@@ -12,9 +12,10 @@ void I2C_Init(void) {
     PORTE->PCR[25] |= (1<<8) | (1<<10) & (~(1<<9));
     
     I2C0->F = 0x80; //mult=2h ICR=00h
-    I2C0->C1 = 0xB0; //10110000 - module enable, interrupt disable, master, transmit
-    //acknowledge bit sent,repeated start off, wake up off, DMA off
-    I2C0->C2 = 0x00;
+    // I2C0->C1 = 0xB0; //10110000 - module enable, interrupt disable, master, transmit
+    // //acknowledge bit sent,repeated start off, wake up off, DMA off
+    I2C1 |= (1 << 7); //enable I2C
+    //I2C0->C2 = 0x00;
 }
 
  void I2C_Write(uint8_t device_address, uint8_t register_address, uint8_t data) {

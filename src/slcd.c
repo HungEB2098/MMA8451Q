@@ -22,11 +22,11 @@ void SLCD_Init(void)
 	SIM->SCGC5 |= (1<<10) | (1<<11) | (1<<12) | (1<<13) | (1<<19); //BCDE and LCD clock enable
 
     // configure pins for LCD operation
-    PORTC->PCR[20] = 0x00000000;     //VLL2
-    PORTC->PCR[21] = 0x00000000;     //VLL1
-    PORTC->PCR[22] = 0x00000000;     //VCAP2
-    PORTC->PCR[23] = 0x00000000;     //VCAP1
-    //Các pin ở trên là các pin dùng để cấp nguồn cho LCD
+    // PORTC->PCR[20] = 0x00000000;     //VLL2
+    // PORTC->PCR[21] = 0x00000000;     //VLL1
+    // PORTC->PCR[22] = 0x00000000;     //VCAP2
+    // PORTC->PCR[23] = 0x00000000;     //VCAP1
+    // //Các pin ở trên là các pin dùng để cấp nguồn cho LCD
 
     // Enable IRCLK
     MCG->C1 = (1<<1) //Internal Reference Select

@@ -4,7 +4,7 @@
 #include "delay.h"
 #include <math.h>
 
-void MMA8451Q_Init(void) {
+void MMA8451_Init(void) {
 //    I2C_Write(0x1D, 0x2A, 0x18); //Put device in Standby mode
 //    I2C_Write(0x1D, 0x15, 0xD8);
 //		//Set Configuration Register for Motion Detection by setting the “OR” condition OAE = 1, enabling
